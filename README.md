@@ -1,16 +1,23 @@
 # HEP Skills: Rigorous Scientific Review & De-AI-ification for High-Energy Physics
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Skills](https://img.shields.io/badge/Skills-hep--text--review-success.svg)](skills/hep-text-review/SKILL.md)
+[![Skills](https://img.shields.io/badge/Skills-hep--text--review%20%7C%20hep--presentation--craft%20%7C%20hep--web--report-success.svg)](skills/)
+[![Standard](https://img.shields.io/badge/Standard-ASD--STE100-orange.svg)](#asd-ste100-standard)
 [![Compatibility](https://img.shields.io/badge/Agents-Antigravity%20%7C%20Claude%20Code%20%7C%20Codex%20%7C%20OpenCode-blueviolet)](#installation)
 
 **`hep-skills`** provides production-grade, reproducible Agent Skills designed specifically for **High-Energy Physics (HEP)** researchers working within large international collaborations (CMS, ATLAS, LHCb, ALICE).
 
-It equips AI coding assistants (Antigravity, Claude Code, OpenAI Codex, OpenCode, Cursor) with formal protocols for **item-by-item truth verification**, **citation graph integrity**, and **Nature/PRL/CMS-grade scientific language polishing** that systematically removes "AI-style" writing artifacts while strictly preserving physics accuracy.
+It equips AI coding assistants (Antigravity, Claude Code, OpenAI Codex, OpenCode, Cursor) with formal protocols for **item-by-item truth verification**, **citation graph integrity**, **ASD-STE100 (Simplified Technical English) cognitive clarity**, and **Nature/PRL/CMS-grade scientific language polishing**.
 
-It features dedicated **Dual-Track Review Protocols**:
-- **Track 1: Physics Analysis Papers & Notes** (AN, PAS, Physics Letters, SM/Higgs/BSM measurements)
-- **Track 2: Detector Instrumentation, Hardware & Commissioning** (TDR, JINST, NIMA, IEEE NSS/MIC, PoS conference proceedings)
+---
+
+## 🧩 The Three-Skill Suite
+
+| Skill | Primary Focus & Formats | Language & Cognitive Standard | Key Features |
+| :--- | :--- | :--- | :--- |
+| **[`hep-text-review`](skills/hep-text-review/SKILL.md)** | LaTeX, Papers, AN, PAS, TDRs, JINST, NIMA | Nature / PRL / CMS Operational Precision | 4-Tier Authority, 9-Role Citations, Dual-Track (Physics vs. Hardware). |
+| **[`hep-presentation-craft`](skills/hep-presentation-craft/SKILL.md)** | Markdown & HTML Slides (Marp, HTML decks) | **ASD-STE100** Controlled English | Assertion-Evidence Titles, $\le 20$ Words/Bullet, 60–70% Visual Area. |
+| **[`hep-web-report`](skills/hep-web-report/SKILL.md)** | Markdown & Standalone Portable HTML | **ASD-STE100** Controlled English | "Start Here" in 60s, Lego Functional Clusters, Self-Contained HTML. |
 
 ---
 
@@ -70,19 +77,9 @@ Clone the repository and install the skill into Claude Code:
 # Clone to your local workspace or tools directory
 git clone https://github.com/De-Cristo/hep-skills.git ~/hep-skills
 
-# Option A: Copy directly to Claude skills directory
+# Option A: Copy all skills directly to Claude skills directory
 mkdir -p ~/.claude/skills
-cp -r ~/hep-skills/skills/hep-text-review ~/.claude/skills/
-
-# Option B: Create a subagent wrapper
-mkdir -p ~/.claude/agents
-cat > ~/.claude/agents/hep-reviewer.md << 'EOF'
----
-name: hep-reviewer
-description: Rigorous HEP text review, fact-checking, citation audit, and Nature/PRL-style polishing for physics and detector papers.
----
-When invoked, read `~/hep-skills/skills/hep-text-review/SKILL.md` and follow its 3-pillar protocol strictly.
-EOF
+cp -r ~/hep-skills/skills/* ~/.claude/skills/
 ```
 
 ---
@@ -93,7 +90,7 @@ For global availability across all workspaces:
 
 ```bash
 mkdir -p ~/.agents/skills
-cp -r ~/hep-skills/skills/hep-text-review ~/.agents/skills/
+cp -r ~/hep-skills/skills/* ~/.agents/skills/
 ```
 
 For project-level availability (committed with your analysis or detector repository):
@@ -101,9 +98,9 @@ For project-level availability (committed with your analysis or detector reposit
 ```bash
 cd your-project-repo/
 mkdir -p .agents/skills
-cp -r ~/hep-skills/skills/hep-text-review .agents/skills/
-git add .agents/skills/hep-text-review
-git commit -m "chore: add hep-text-review agent skill"
+cp -r ~/hep-skills/skills/* .agents/skills/
+git add .agents/skills/
+git commit -m "chore: add hep-skills suite (text review, presentation craft, web report)"
 ```
 
 ---
@@ -113,16 +110,16 @@ git commit -m "chore: add hep-text-review agent skill"
 ```bash
 # Install to Codex global skills
 mkdir -p ~/.codex/skills
-cp -r ~/hep-skills/skills/hep-text-review ~/.codex/skills/
+cp -r ~/hep-skills/skills/* ~/.codex/skills/
 ```
 
 ---
 
 ## 🚀 Usage & Prompt Examples
 
-Once installed, invoke the skill directly in your AI assistant:
+Once installed, invoke the desired skill directly in your AI assistant:
 
-### 1. Reviewing an Analysis Note:
+### 1. Reviewing an Analysis Note or Paper (`hep-text-review`):
 ```text
 Review sections/06_mutag_hbb_calibration.tex using the hep-text-review skill:
 1. Verify every cut, bin boundary, and formula against the code in mutag-calib/
@@ -130,19 +127,21 @@ Review sections/06_mutag_hbb_calibration.tex using the hep-text-review skill:
 3. De-AI-ify the language using Flavor A (Nature active voice) and Flavor B (PRL compactness)
 ```
 
-### 2. Reviewing a Detector / Instrumentation Paper:
+### 2. Crafting Markdown / HTML Slides (`hep-presentation-craft`):
 ```text
-Review main.tex using hep-text-review (Track 2: Detector Instrumentation):
-1. Audit all detector parameters (channel counts, fluences, cooling temperatures, ASIC specifications) against CMS-TDR-020 and test-beam papers.
-2. Check citation placement for ASICs, TDRs, and test-beam facilities.
-3. Polish language with Flavor E (Instrumentation Tone) and ensure robust LaTeX compiler compatibility.
+Help me draft slides for tomorrow's CMS BTL Working Group meeting using hep-presentation-craft:
+1. Format as Marp markdown using the Assertion-Evidence model.
+2. Enforce ASD-STE100 rules (max 20 words per bullet, active voice, no noun stacking).
+3. Structure: 6 slides covering our lpGBT phase lock fix, two-RU synchronization, and next beam test goals.
 ```
 
-### 3. Fact-Checking & Proof-Carrying Audit:
+### 3. Authoring an Interactive Research Report (`hep-web-report`):
 ```text
-Apply the hep-text-review ground truth protocol on sections/05_stxs_poi_reco_binning.tex:
-- Audit all category migration numbers against our validation Parquet dumps.
-- Flag any claim that cannot be traced to an artifact within 3 steps.
+Convert our DAQ multi-RU research notes into a standalone HTML report using hep-web-report:
+1. Add a "Start Here" 60-second mental model with a physical-to-electronic architecture diagram.
+2. Group the 13 hardware operations into 4 Lego functional clusters.
+3. Apply ASD-STE100 language rules with a plain-language meaning column for register tables.
+4. Compile into a self-contained HTML file ready for /eos/user/l/lichengz/www/ deployment.
 ```
 
 ---
